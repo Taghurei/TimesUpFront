@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default {
 
-  getPlayers({ commit }, players) {
+  getPlayers({ commit }: any, players: any) {
     axios
       .get(`https://stormy-garden-54376.herokuapp.com/${players}`, {
         headers: {
@@ -18,15 +18,15 @@ export default {
       });
   },
 
-  changePlayer({ commit, getters }, player) {
+  changePlayer({ commit, getters }: any, player: any) {
     commit('setCurrentPlayer', getters.getPlayer(player));
   },
 
-  needNewPlayer({ commit }) {
+  needNewPlayer({ commit }: any) {
     commit('newPlayer');
   },
 
-  updatePlayerScore({ commit }, player) {
+  updatePlayerScore({ commit }: any, player: any) {
     axios
       .post(`https://stormy-garden-54376.herokuapp.com/players/${player.player_id}`, {
         score: player.score,
@@ -34,7 +34,8 @@ export default {
       .then((r) => r.data);
   },
 
-  addNewPlayer({ commit }, player) {
+  addNewPlayer({ commit }: any, player: any) {
+    console.log(player);
     return axios
       .post('https://stormy-garden-54376.herokuapp.com/players', player);
   },

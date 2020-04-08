@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 export default {
-  getGames({ commit }, gameId) {
+  getGames({ commit }: any) {
+    console.log('actions');
     axios
       .get('https://stormy-garden-54376.herokuapp.com/games', {
         headers: {
@@ -16,7 +17,7 @@ export default {
       });
   },
 
-  addNewGame({ commit }, game) {
+  addNewGame({ commit }: any, game: any) {
     console.log('actions: ', game.teams.team1);
     axios
       .post('https://stormy-garden-54376.herokuapp.com/games', game)
@@ -28,13 +29,13 @@ export default {
 
   setScore({
     state, commit, getters, rootState, rootGetters,
-  }, game) {
+  }: any, game: any) {
     let score1 = 0;
     let score2 = 0;
-    game.teams.team1.forEach((element) => {
+    game.teams.team1.forEach((element: any) => {
       score1 += rootGetters['players/getPlayer'](element).score;
     });
-    game.teams.team2.forEach((element) => {
+    game.teams.team2.forEach((element: any) => {
       score2 += rootGetters['players/getPlayer'](element).score;
     });
     commit('setScore', { team: 'team1', score: score1 });

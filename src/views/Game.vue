@@ -52,7 +52,7 @@ export default {
   },
 
   created() {
-    this.getGames('games');
+    this.getGames();
     this.getPlayers('players');
   },
 
