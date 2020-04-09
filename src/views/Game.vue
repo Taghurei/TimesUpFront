@@ -16,7 +16,6 @@
 <script>
 import Team from '@/components/Team.vue';
 import WordToGuess from '@/components/WordToGuess.vue';
-import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
