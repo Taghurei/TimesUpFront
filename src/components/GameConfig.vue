@@ -115,7 +115,6 @@ export default {
         name: this.gameName,
         words: this.wordList,
       };
-      console.log(this.team1);
       const promiseTeam1 = new Promise((resolve, reject) => {
         for (let i = 0; i < this.team1.length; i += 1) {
           this.addPlayers(this.team1[i])
