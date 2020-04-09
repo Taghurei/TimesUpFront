@@ -1,19 +1,22 @@
 <template>
   <div class="home">
-      <h1>
-      Welcome to this Times'Up
-      </h1>
-    <div v-if="display">
+    <div class="container">
 
-          <router-link class="button is-link"
-      :to="{ name: 'Config' }"> Start
-      </router-link>
-    </div>
-    <div v-else>
-      <button class="button is-link is-loading">Start</button>
-      <p>
-        Waking up the server
-      </p>
+      <img class="logo" src="@/assets/logo.png">
+      <div v-if="display">
+
+            <router-link class="display button is-link"
+        :to="{ name: 'Config' }"> Start
+        </router-link>
+      </div>
+      <div v-else>
+        <div class="display">
+        <button class="button is-link is-loading">Start</button>
+        <p>
+          Waking up the server
+        </p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -43,3 +46,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.display{
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

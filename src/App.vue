@@ -33,8 +33,8 @@
   h2 {
     font-size: 2rem;
   }
-  img {
-  height: 16px;
+  .logo{
+    max-height: 80vh;
   }
   .title {
     color: #4267B3;
