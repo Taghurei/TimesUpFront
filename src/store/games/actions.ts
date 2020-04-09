@@ -4,7 +4,7 @@ export default {
   getGames({ commit }: any) {
     console.log('actions');
     axios
-      .get('https://stormy-garden-54376.herokuapp.com/games', {
+      .get(`${process.env.VUE_APP_API}/games`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export default {
   addNewGame({ commit }: any, game: any) {
     console.log('actions: ', game.teams.team1);
     axios
-      .post('https://stormy-garden-54376.herokuapp.com/games', game)
+      .post(`${process.env.VUE_APP_API}/games`, game)
       .then((r) => r.data)
       .then((currentGame) => {
         commit('setCurrentGame', currentGame);

@@ -18,7 +18,7 @@ export default new Vuex.Store({
   actions: {
     wakeUpBack({ commit }: any) {
       axios
-        .get('http://localhost:5000')
+        .get(process.env.VUE_APP_API)
         .then(() => {
           commit('backIsUp');
         });

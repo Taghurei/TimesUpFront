@@ -5,7 +5,7 @@ export default {
 
   getPlayers({ commit }: any, players: any) {
     axios
-      .get(`https://stormy-garden-54376.herokuapp.com/${players}`, {
+      .get(`${process.env.VUE_APP_API}/${players}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export default {
 
   updatePlayerScore({ commit }: any, player: any) {
     axios
-      .post(`https://stormy-garden-54376.herokuapp.com/players/${player.player_id}`, {
+      .post(`${process.env.VUE_APP_API}/players/${player.player_id}`, {
         score: player.score,
       })
       .then((r) => r.data);
@@ -37,6 +37,6 @@ export default {
   addNewPlayer({ commit }: any, player: any) {
     console.log(player);
     return axios
-      .post('https://stormy-garden-54376.herokuapp.com/players', player);
+      .post(`${process.env.VUE_APP_API}/players`, player);
   },
 };
