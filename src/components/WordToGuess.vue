@@ -89,7 +89,7 @@ export default {
       this.temporaryWordList = this.temporaryWordList.filter(
         (item) => item !== this.wordToGuess,
       );
-      this.player.score += 1;
+      this.player.score_total += 1;
       if (this.temporaryWordList.length > 0) {
         this.newWord();
       } else {

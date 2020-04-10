@@ -33,13 +33,13 @@ export default {
     let score1 = 0;
     let score2 = 0;
     game.teams.team1.forEach((element: any) => {
-      score1 += rootGetters['players/getPlayer'](element).score;
+      score1 += rootGetters['players/getPlayer'](element).score_total;
     });
     game.teams.team2.forEach((element: any) => {
-      score2 += rootGetters['players/getPlayer'](element).score;
+      score2 += rootGetters['players/getPlayer'](element).score_total;
     });
-    commit('setScore', { team: 'team1', score: score1 });
-    commit('setScore', { team: 'team2', score: score2 });
+    commit('setScore', { team: 'team1', score_total: score1 });
+    commit('setScore', { team: 'team2', score_total: score2 });
   },
 
 };

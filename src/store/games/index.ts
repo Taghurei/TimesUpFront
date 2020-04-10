@@ -8,7 +8,7 @@ const games = {
   namespaced,
   state: {
     games: [],
-    score: { team1: 0, team2: 0 },
+    score_total: { team1: 0, team2: 0 },
     currentGame: {},
   },
 

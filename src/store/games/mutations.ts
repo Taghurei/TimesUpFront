@@ -3,8 +3,8 @@ export default {
     state.games = games;
   },
 
-  setScore(state: any, { team, score }: any) {
-    state.score[team] = score;
+  setScore(state: any, { team, score_total }: any) {
+    state.score_total[team] = score_total;
   },
 
   setCurrentGame(state: any, game: any) {

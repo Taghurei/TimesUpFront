@@ -6,7 +6,7 @@
         {{ getPlayer(player).name }}
       </a>
     </li>
-    <h3> score : {{score[team]}} </h3>
+    <h3> score : {{scoreTotal[team]}} </h3>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     ...mapState({
-      score: (state) => state.games.score,
+      scoreTotal: (state) => state.games.score_total,
     }),
     ...mapGetters({
       getCurrentTeam: 'games/getCurrentTeam',

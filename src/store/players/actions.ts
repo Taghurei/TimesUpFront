@@ -29,7 +29,7 @@ export default {
   updatePlayerScore({ commit }: any, player: any) {
     axios
       .post(`${process.env.VUE_APP_API}/players/${player.player_id}`, {
-        score: player.score,
+        score_total: player.score_total,
       })
       .then((r) => r.data);
   },
