@@ -139,9 +139,7 @@ export default {
       });
       Promise.all([promiseTeam1, promiseTeam2])
         .then(() => {
-          this.addNewGame(this.game).then(
-            this.$router.push({ name: 'Game', params: { gameName: this.gameName } }),
-          );
+          this.addNewGame(this.game);
         });
     },
 
@@ -154,6 +152,18 @@ export default {
     },
     checkGame() {
       console.log(this.game);
+    },
+  },
+
+  computed: {
+    ...mapState({
+      currentGame: (state) => state.games.currentGame,
+    }),
+  },
+
+  watch: {
+    currentGame() {
+      this.$router.push({ name: 'Game', params: { gameName: this.gameName } });
     },
   },
 };
