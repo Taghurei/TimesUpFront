@@ -10,7 +10,7 @@
 
       <a v-if="!isOver && isReady"
         class="button is-success"
-        @click="validate() + $emit('validate')">
+        @click="validate">
         Validate </a>
       <a v-if=isOver class="button is-link" @click="newRound">Start a new Round </a>
       <a v-if="!isReady && !isOver" class="button is-link" @click="start">Start</a>
@@ -41,6 +41,7 @@ export default {
       isOver: true,
       wordToGuess: '',
       words: [],
+// data for the Timer      
       timeLimit: 30,
       timePassed: 0,
       timerInterval: null,
@@ -53,9 +54,11 @@ export default {
       games: (state) => state.games.games,
       isPlayerSet: (state) => state.players.isPlayerSet,
     }),
+
     ...mapGetters({
       getGame: 'games/getCurrentGame',
     }),
+
     timeLeft() {
       if (this.timeLimit - this.timePassed >= 0) {
         return this.timeLimit - this.timePassed;
@@ -72,10 +75,12 @@ export default {
       updatePlayerScore: 'players/updatePlayerScore',
       updateTeamScore: 'games/setScore',
     }),
+
     stopTimer() {
       this.timePassed = 0;
       clearInterval(this.timerInterval);
     },
+
     startTimer() {
       this.timerInterval = setInterval(() => { this.timePassed += 1; }, 1000);
     },
@@ -93,13 +98,22 @@ export default {
       if (this.temporaryWordList.length > 0) {
         this.newWord();
       } else {
-        this.wordToGuess = '';
-        this.updatePlayerScore(this.player);
-        this.updateTeamScore(this.getGame(this.gameName));
         this.isOver = true;
-        this.needNewPlayer();
-        this.stopTimer();
+        this.update();
       }
+    },
+
+    refuse() {
+      this.isReady = false;
+      this.update();
+    },
+
+    update() {
+      this.wordToGuess = '';
+      this.updatePlayerScore(this.player);
+      this.updateTeamScore(this.getGame(this.gameName));
+      this.needNewPlayer();
+      this.stopTimer();
     },
 
     newRound() {
@@ -117,15 +131,10 @@ export default {
       this.startTimer();
     },
 
-    refuse() {
-      this.updateTeamScore(this.getGame(this.gameName));
-      this.updatePlayerScore(this.player);
-      this.wordToGuess = '';
-      this.isReady = false;
-      this.needNewPlayer();
-      this.stopTimer();
-    },
+
+
   },
+
   created() {
     this.updateTeamScore(this.getGame(this.gameName));
   },
