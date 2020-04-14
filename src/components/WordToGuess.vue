@@ -27,6 +27,7 @@ import {
   mapActions, mapState, mapMutations, mapGetters,
 } from 'vuex';
 import Timer from './Timer.vue';
+import players from '../store/players';
 
 export default {
   props: ['gameName'],
@@ -57,6 +58,8 @@ export default {
 
     ...mapGetters({
       getGame: 'games/getCurrentGame',
+      getCurrentTeam: 'games/getCurrentTeam',
+      getPlayer: 'players/getPlayer',
     }),
 
     timeLeft() {
@@ -72,7 +75,8 @@ export default {
   methods: {
     ...mapActions({
       needNewPlayer: 'players/needNewPlayer',
-      updatePlayerScore: 'players/updatePlayerScore',
+      updatePlayerScoreRound: 'players/updatePlayerScoreRound',
+      updatePlayerScoreTotal: 'players/updatePlayerScoreTotal',
       updateTeamScore: 'games/setScore',
     }),
 
@@ -95,6 +99,7 @@ export default {
         (item) => item !== this.wordToGuess,
       );
       this.player.score_total += 1;
+      this.player.score_round += 1;
       if (this.temporaryWordList.length > 0) {
         this.newWord();
       } else {
@@ -110,8 +115,9 @@ export default {
 
     update() {
       this.wordToGuess = '';
-      this.updatePlayerScore(this.player);
-      this.updateTeamScore(this.getGame(this.gameName));
+      this.updatePlayerScoreRound(this.player);
+      this.updatePlayerScoreTotal(this.player);
+      this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_round' });
       this.needNewPlayer();
       this.stopTimer();
     },
@@ -120,7 +126,7 @@ export default {
       this.isOver = false;
       this.isReady = false;
       this.words = this.getGame(this.gameName).words;
-      console.log(this.words);
+      this.setScoreRoundToNull();
       this.temporaryWordList = JSON.parse(JSON.stringify(this.words));
       this.start();
     },
@@ -131,12 +137,19 @@ export default {
       this.startTimer();
     },
 
-
+    setScoreRoundToNull() {
+      let currentTeams = this.getCurrentTeam(this.gameName, 'team1')
+        .concat(this.getCurrentTeam(this.gameName, 'team2'));
+      currentTeams.forEach(player => {
+        this.getPlayer(player).score_round = 0,
+        this.updatePlayerScoreRound(this.getPlayer(player))
+        })
+    },
 
   },
 
   created() {
-    this.updateTeamScore(this.getGame(this.gameName));
+    this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_round' });
   },
 
 };

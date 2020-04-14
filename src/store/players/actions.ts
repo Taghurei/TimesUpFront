@@ -26,7 +26,15 @@ export default {
     commit('newPlayer');
   },
 
-  updatePlayerScore({ commit }: any, player: any) {
+  updatePlayerScoreRound({ commit }: any, player: any) {
+    axios
+      .post(`${process.env.VUE_APP_API}/players/${player.player_id}`, {
+        score_round: player.score_round,
+      })
+      .then((r) => r.data);
+  },
+
+  updatePlayerScoreTotal({ commit }: any, player: any) {
     axios
       .post(`${process.env.VUE_APP_API}/players/${player.player_id}`, {
         score_total: player.score_total,
