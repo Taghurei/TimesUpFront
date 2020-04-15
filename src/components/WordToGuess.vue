@@ -3,26 +3,31 @@
     <div v-if="isPlayerSet">
       <h3> Current player :<br/> <strong> {{player.name}} </strong> </h3>
       <h3> Word To Guess : <br/> <strong> {{wordToGuess}} </strong> </h3>
-      <a v-if="!isOver && isReady"
+      <a v-if="!isRoundOver && isReady"
         class="button is-warning"
         @click="refuse">
         Refuse </a>
 
-      <a v-if="!isOver && isReady"
+      <a v-if="!isRoundOver && isReady && !isTimeUp"
         class="button is-success"
         @click="validate">
         Validate </a>
 
-      <a v-if="!isReady && !isOver" class="button is-link" @click="start">Start</a>
-      <Timer v-if="isReady &&!isOver" class="timer" :time-left="timeLeft" :timeLimit="timeLimit"/>
+      <a v-if="!isRoundOver && isReady && isTimeUp"
+        class="button is-danger"
+        @click="validate">
+        Validate </a>
+
+      <a v-if="!isReady && !isRoundOver" class="button is-link" @click="start">Start</a>
+      <Timer v-if="isReady &&!isRoundOver" class="timer" :time-left="timeLeft" :timeLimit="timeLimit"/>
     </div>
     <div v-else>
-        <div v-if="isOver">
+        <div v-if="isRoundOver">
           <a class="button is-link" @click="newRound">Start a new Round </a>
           <LeaderBoard :gameName="gameName"/>
         </div>
         <div v-else>
-          You need to Set the current player
+          <h3> You need to Set the current player </h3>
         </div>
     </div>
   </div>
@@ -47,7 +52,8 @@ export default {
   data() {
     return {
       isReady: false,
-      isOver: true,
+      isRoundOver: true,
+      isTimeUp: false,
       wordToGuess: '',
       words: [],
 // data for the Timer      
@@ -75,8 +81,16 @@ export default {
         return this.timeLimit - this.timePassed;
       }
       this.stopTimer();
-      console.log('over');
+      this.isTimeUp = true;
       return 0;
+    },
+  },
+
+  watch:{
+    player() {
+      if(this.isRoundOver){
+        this.newRound();
+      }
     },
   },
 
@@ -94,6 +108,7 @@ export default {
     },
 
     startTimer() {
+      this.isTimeUp = false;
       this.timerInterval = setInterval(() => { this.timePassed += 1; }, 1000);
     },
 
@@ -109,9 +124,14 @@ export default {
       this.player.score_total += 1;
       this.player.score_round += 1;
       if (this.temporaryWordList.length > 0) {
-        this.newWord();
+        if(!this.isTimeUp) {
+          this.newWord();
+        }
+        else{
+          this.refuse();
+        }
       } else {
-        this.isOver = true;
+        this.isRoundOver = true;
         this.update();
       }
     },
@@ -132,7 +152,7 @@ export default {
     },
 
     newRound() {
-      this.isOver = false;
+      this.isRoundOver = false;
       this.isReady = false;
       this.words = this.getGame(this.gameName).words;
       this.setScoreRoundToNull();
