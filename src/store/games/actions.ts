@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export default {
   getGames({ commit }: any) {
-    console.log('actions');
     axios
       .get(`${process.env.VUE_APP_API}/games`, {
         headers: {
@@ -18,7 +17,6 @@ export default {
   },
 
   addNewGame({ commit }: any, game: any) {
-    console.log('actions: ', game.teams.team1);
     axios
       .post(`${process.env.VUE_APP_API}/games`, game)
       .then((r) => r.data)
@@ -34,7 +32,6 @@ export default {
     let score2 = 0;
     
     game.teams.team1.forEach((element: any) => {
-      console.log(rootGetters['players/getPlayer'](element)[score_type])
       score1 += rootGetters['players/getPlayer'](element)[score_type];
     });
     game.teams.team2.forEach((element: any) => {

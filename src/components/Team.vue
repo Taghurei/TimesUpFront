@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <div v-if="canDisplay">
+      <h2>{{team}}</h2>
     <li v-for="player in currentTeam" v-bind:key="player">
       <a @click="changePlayer(player)">
         {{ getPlayer(player).name }}
@@ -52,5 +53,6 @@ export default {
 li{
       list-style-type: none;
       font-weight: bold;
+      font-size: 1.5rem;
 }
 </style>

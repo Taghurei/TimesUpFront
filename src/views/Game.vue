@@ -45,9 +45,6 @@ export default {
       getGames: 'games/getGames',
       getPlayers: 'players/getPlayers',
     }),
-    click() {
-      console.log(this.games);
-    },
   },
 
   created() {

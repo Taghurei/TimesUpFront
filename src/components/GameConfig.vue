@@ -83,9 +83,7 @@ export default {
   methods: {
     addPlayer(team, newPlayer) {
       if (newPlayer.name) {
-        if (team.some((e) => e.name === newPlayer.name)) {
-          console.log('alreadu in');
-        } else {
+        if (!team.some((e) => e.name === newPlayer.name)) {
           team.push({ name: newPlayer.name });
           this.newPlayer1.name = '';
           this.newPlayer2.name = '';
@@ -150,9 +148,7 @@ export default {
         });
       });
     },
-    checkGame() {
-      console.log(this.game);
-    },
+
   },
 
   computed: {

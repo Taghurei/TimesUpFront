@@ -43,7 +43,6 @@ export default {
   },
 
   addNewPlayer({ commit }: any, player: any) {
-    console.log(player);
     return axios
       .post(`${process.env.VUE_APP_API}/players`, player);
   },

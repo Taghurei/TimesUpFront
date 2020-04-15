@@ -4,7 +4,6 @@ export default {
     .find((game: any) => game.name === gameName),
   getCurrentTeam: (state: any, getters: any) => (gameName: any, teamName: any) => {
     const game = getters.getCurrentGame(gameName);
-    console.log(game.teams[teamName]);
     return game.teams[teamName];
   },
 };
