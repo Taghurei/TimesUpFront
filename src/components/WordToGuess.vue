@@ -91,6 +91,10 @@ export default {
       if(this.isRoundOver){
         this.newRound();
       }
+      else{
+        this.isReady = false;
+        this.update();
+      }
     },
   },
 
@@ -133,12 +137,14 @@ export default {
       } else {
         this.isRoundOver = true;
         this.update();
+        this.needNewPlayer();
       }
     },
 
     refuse() {
       this.isReady = false;
       this.update();
+      this.needNewPlayer();
     },
 
     update() {
@@ -147,7 +153,6 @@ export default {
       this.updatePlayerScoreTotal(this.player);
       this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_round' });
       this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_total' });
-      this.needNewPlayer();
       this.stopTimer();
     },
 
