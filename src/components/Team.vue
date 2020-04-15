@@ -6,7 +6,6 @@
         {{ getPlayer(player).name }}
       </a>
     </li>
-    <h3> score : {{scoreTotal[team]}} </h3>
     </div>
   </div>
 </template>
