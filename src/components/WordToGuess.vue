@@ -12,12 +12,18 @@
         class="button is-success"
         @click="validate">
         Validate </a>
-      <a v-if=isOver class="button is-link" @click="newRound">Start a new Round </a>
+
       <a v-if="!isReady && !isOver" class="button is-link" @click="start">Start</a>
       <Timer v-if="isReady &&!isOver" class="timer" :time-left="timeLeft" :timeLimit="timeLimit"/>
     </div>
     <div v-else>
-      You need to Set the current player
+        <div v-if="isOver">
+          <a class="button is-link" @click="newRound">Start a new Round </a>
+          <LeaderBoard :gameName="gameName"/>
+        </div>
+        <div v-else>
+          You need to Set the current player
+        </div>
     </div>
   </div>
 </template>
@@ -27,6 +33,7 @@ import {
   mapActions, mapState, mapMutations, mapGetters,
 } from 'vuex';
 import Timer from './Timer.vue';
+import LeaderBoard from './LeaderBoard.vue'
 import players from '../store/players';
 
 export default {
@@ -34,6 +41,7 @@ export default {
 
   components: {
     Timer,
+    LeaderBoard,
   },
 
   data() {
@@ -118,6 +126,7 @@ export default {
       this.updatePlayerScoreRound(this.player);
       this.updatePlayerScoreTotal(this.player);
       this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_round' });
+      this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_total' });
       this.needNewPlayer();
       this.stopTimer();
     },
@@ -128,7 +137,6 @@ export default {
       this.words = this.getGame(this.gameName).words;
       this.setScoreRoundToNull();
       this.temporaryWordList = JSON.parse(JSON.stringify(this.words));
-      this.start();
     },
 
     start() {
@@ -149,7 +157,7 @@ export default {
   },
 
   created() {
-    this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_round' });
+    this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_total' });
   },
 
 };
