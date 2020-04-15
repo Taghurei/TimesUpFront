@@ -14,7 +14,7 @@
   text-align: center;
   color: #616771;
   background-color: #eef2f5;
-  height:100vh;
+  min-height:100vh;
   font-size: 1rem;
   input{
     height: 2.5em;

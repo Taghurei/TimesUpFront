@@ -1,6 +1,7 @@
 <template>
   <div class="">
-      <h2> Score Round </h2>
+      <h2 class="score"> Score Round </h2>
+      <div class="clearfix" >
       <table class="table" >
         <thead>
           <tr>
@@ -9,7 +10,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="player in team1" v-bind:key="player">
+          <tr v-for="player in team1" v-bind:key="player"
+          v-bind:class="{ 
+            first: getFirstScore(gameName, 'score_round') === getPlayer(player).score_round,
+            second: getSecondScore(gameName, 'score_round') === getPlayer(player).score_round,
+            third: getThirdScore(gameName, 'score_round') === getPlayer(player).score_round,
+            }">
           <td>{{ getPlayer(player).name }}</td>
           <td>{{ getPlayer(player).score_round }}</td>
           </tr>
@@ -23,13 +29,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="player in team2" v-bind:key="player">
+          <tr v-for="player in team2" v-bind:key="player"
+          v-bind:class="{ 
+            first: getFirstScore(gameName, 'score_round') === getPlayer(player).score_round,
+            second: getSecondScore(gameName, 'score_round') === getPlayer(player).score_round,
+            third: getThirdScore(gameName, 'score_round') === getPlayer(player).score_round,
+            }">
           <td>{{ getPlayer(player).name }}</td>
           <td>{{ getPlayer(player).score_round }}</td>
           </tr>
         </tbody>
       </table>
-      <h2> Score Total </h2>
+      </div>
+      <h2 class="score"> Score Total </h2>
       <table class="table" >
         <thead>
           <tr>
@@ -38,7 +50,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="player in team1" v-bind:key="player">
+          <tr v-for="player in team1" v-bind:key="player"
+          v-bind:class="{ 
+            first: getFirstScore(gameName, 'score_total') === getPlayer(player).score_total,
+            second: getSecondScore(gameName, 'score_total') === getPlayer(player).score_total,
+            third: getThirdScore(gameName, 'score_total') === getPlayer(player).score_total,
+            }">
           <td>{{ getPlayer(player).name }}</td>
           <td>{{ getPlayer(player).score_total }}</td>  
           </tr>
@@ -52,7 +69,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="player in team2" v-bind:key="player">
+          <tr v-for="player in team2" v-bind:key="player"
+          v-bind:class="{ 
+            first: getFirstScore(gameName, 'score_total') === getPlayer(player).score_total,
+            second: getSecondScore(gameName, 'score_total') === getPlayer(player).score_total,
+            third: getThirdScore(gameName, 'score_total') === getPlayer(player).score_total,
+            }">
           <td>{{ getPlayer(player).name }}</td>
           <td>{{ getPlayer(player).score_total }}</td>
           </tr>
@@ -80,6 +102,9 @@ export default {
     ...mapGetters({
       getCurrentTeam: 'games/getCurrentTeam',
       getPlayer: 'players/getPlayer',
+      getFirstScore: 'games/getFirstScore',
+      getSecondScore: 'games/getSecondScore',
+      getThirdScore: 'games/getThirdScore',
     }),
   },
 
@@ -92,11 +117,33 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style lang="scss">
   .table{
     position:relative;
     float: left;
-    width : 47%;
-    margin-right: 2%;
+    width : 48%;
+    margin: 1%;
   }
+  .leaderboard-logo{
+    height:16px;
+  }
+  .first{
+    background-color: #FFD700;
+  }
+  .second{
+    background-color: #C0C0C0;
+  }
+  .third{
+    background-color: #CD7F32;
+  }
+  .score{
+    position: static;
+  }
+  
+
+.clearfix::after {
+  display: block;
+  content: "";
+  clear: both;
+}
 </style>
