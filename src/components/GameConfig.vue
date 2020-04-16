@@ -57,7 +57,8 @@
         <input type="text" v-model="word" />
         <button class="button" type="submit">Add Word</button>
       </form>
-      <button class="button is-link" @click="addGame(game)">Start Game</button>
+      <button v-if="!isLoading" class="button is-link" @click="addGame(game)">Start Game</button>
+      <button v-else class="button is-link is-loading">Start Game</button>
     </div>
   </div>
 </template>
@@ -78,6 +79,7 @@ export default {
       wordList: [],
       game: {},
       gameName: randomWords(),
+      isLoading: false,
     };
   },
   methods: {
@@ -114,6 +116,7 @@ export default {
         name: this.gameName,
         words: this.wordList,
       };
+      this.isLoading = true;
       const promiseTeam1 = new Promise((resolve, reject) => {
         for (let i = 0; i < this.team1.length; i += 1) {
           this.addPlayers(this.team1[i])

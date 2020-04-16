@@ -79,9 +79,7 @@ export default {
 <style>
 .loading{
     position: relative;
-
     transform: translateY(100%);
- 
 }
 
 </style>
