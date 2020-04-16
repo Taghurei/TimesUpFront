@@ -12,9 +12,11 @@
         <Team  :team="team2" :gameName="gameName"/>
       </div>
     </div>
-    <div v-else>
+    <div v-else class="loading">
       <a class="button is-loading is-link">Loading </a>
-      Loading the game
+        <p>
+          Loading the Game
+        </p>    
     </div>
   </div>
 </template>
@@ -74,7 +76,12 @@ export default {
 };
 
 </script>
-<style scoped lang="scss">
+<style>
+.loading{
+    position: relative;
 
+    transform: translateY(100%);
+ 
+}
 
 </style>
