@@ -96,6 +96,7 @@ export default {
     ...mapActions({
       addNewGame: 'games/addNewGame',
       addNewPlayer: 'players/addNewPlayer',
+      getPlayers: 'players/getPlayers',
     }),
     addNewWord() {
       if (this.word) {
@@ -159,7 +160,9 @@ export default {
 
   watch: {
     currentGame() {
-      this.$router.push({ name: 'Game', params: { gameName: this.gameName } });
+      this.getPlayers().then( () =>
+        this.$router.push({ name: 'Game', params: { gameName: this.gameName } })
+      );
     },
   },
 };

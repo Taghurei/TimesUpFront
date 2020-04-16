@@ -1,14 +1,20 @@
 <template>
-  <div v-if="display" class="container">
-    <div class="team vertical-center">
-      <Team :team="team1" :gameName="gameName"/>
-    </div>
+  <div>
+    <div v-if="display && currentGameIsCharged" class="container">
+      <div class="team vertical-center">
+        <Team :team="team1" :gameName="gameName"/>
+      </div>
 
-    <div class="guess vertical-center">
-      <WordToGuess :gameName="gameName"/>
+      <div class="guess vertical-center">
+        <WordToGuess :gameName="gameName"/>
+      </div>
+      <div class="team vertical-center">
+        <Team  :team="team2" :gameName="gameName"/>
+      </div>
     </div>
-    <div class="team vertical-center">
-      <Team  :team="team2" :gameName="gameName"/>
+    <div v-else>
+      <a class="button is-loading is-link">Loading </a>
+      Loading the game
     </div>
   </div>
 </template>
@@ -34,9 +40,18 @@ export default {
     return {
       team1: 'team1',
       team2: 'team2',
+      currentGameIsCharged: false,
     };
   },
-
+  watch:{
+    games() {
+      this.games.forEach(element => {
+        if(element.name === this.gameName){
+          this.currentGameIsCharged= true
+        }
+      });
+    }
+  },
   methods: {
     ...mapGetters({
       currentGame: 'games/currentGame',
@@ -49,7 +64,7 @@ export default {
 
   created() {
     this.getGames();
-    this.getPlayers('players');
+    this.getPlayers();
   },
 
   components: {
