@@ -55,7 +55,13 @@
           Your game currently has {{ wordList.length }} word(s)
       <form v-on:submit.prevent="addNewWord()">
         <input type="text" v-model="word" />
-        <button class="button" type="submit">Add Word</button>
+        <button v-if="!checkIfWordInWords(word)" class="button" type="submit">Add Word</button>
+            <div
+              v-if="checkIfWordInWords(word)"
+              class="help is-danger"
+            >
+              The word was already added 
+            </div>
       </form>
       <button v-if="!isLoading" class="button is-link" @click="addGame(game)">Start Game</button>
       <button v-else class="button is-link is-loading">Start Game</button>
@@ -92,8 +98,11 @@ export default {
         }
       }
     },
-    checkIfPlayerInTeam(team, word) {
-      return (team.some((e) => e.name === word));
+    checkIfPlayerInTeam(team, player) {
+      return (team.some((e) => e.name === player));
+    },
+    checkIfWordInWords(word){
+      return (this.wordList.some((e) => e === word));
     },
     ...mapActions({
       addNewGame: 'games/addNewGame',
