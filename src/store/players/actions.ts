@@ -46,7 +46,10 @@ export default {
   },
 
   addNewPlayer({ commit }: any, player: any) {
-    return axios
-      .post(`${process.env.VUE_APP_API}/players`, player);
+    return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API}/players`, player)
+      .then((r) =>resolve(r.data))
+    })
   },
 };

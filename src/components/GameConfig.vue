@@ -118,29 +118,34 @@ export default {
       };
       this.isLoading = true;
       const promiseTeam1 = new Promise((resolve, reject) => {
+        let teamId1 = []
         for (let i = 0; i < this.team1.length; i += 1) {
           this.addPlayers(this.team1[i])
             .then((res) => {
-              this.game.teams.team1.push(res.data.player_id);
-              if (i === this.team1.length - 1) {
-                resolve();
+              teamId1.push(res.player_id);
+              if (teamId1.length === this.team1.length) {
+                resolve(teamId1);
               }
             });
         }
       });
       const promiseTeam2 = new Promise((resolve, reject) => {
+        let teamId2 = []
         for (let i = 0; i < this.team2.length; i += 1) {
           this.addPlayers(this.team2[i])
             .then((res) => {
-              this.game.teams.team2.push(res.data.player_id);
-              if (i === this.team2.length - 1) {
-                resolve();
-              }
+              teamId2.push(res.player_id);
+              if (teamId2.length === this.team2.length) {
+                resolve(teamId2);
+        }
             });
+          
         }
       });
       Promise.all([promiseTeam1, promiseTeam2])
-        .then(() => {
+        .then((teams) => {
+          this.game.teams.team1 = teams[0]
+          this.game.teams.team2 = teams[1]
           this.addNewGame(this.game);
         });
     },
