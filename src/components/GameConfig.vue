@@ -59,6 +59,8 @@
       </form>
       <button v-if="!isLoading" class="button is-link" @click="addGame(game)">Start Game</button>
       <button v-else class="button is-link is-loading">Start Game</button>
+      {{game}} - 
+      <div v-if="game.teams"> {{game.teams.team1.length}} -{{game.teams.team2.length}} </div>
     </div>
   </div>
 </template>
@@ -166,13 +168,12 @@ export default {
     }),
   },
 
-  watch: {
-    currentGame() {
-      this.getPlayers().then( () =>
-        this.$router.push({ name: 'Game', params: { gameName: this.gameName } })
-      );
-    },
-  },
+  // watch: {
+  //   currentGame() {
+  //     this.getPlayers().then( () =>
+  //       this.$router.push({ name: 'Game', params: { gameName: this.gameName } }));
+  //   },
+  // },
 };
 </script>
 
