@@ -1,5 +1,6 @@
+import { Player } from './types';
 
 export default {
-  getPlayer: (state: any) => (playerId: any) => state.players
-    .find((player: any) => player.player_id === playerId),
+  getPlayer: (state: any) => (playerId: string) => state.players
+    .find((player: Player) => player.player_id === playerId),
 };

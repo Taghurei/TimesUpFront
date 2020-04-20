@@ -16,7 +16,7 @@
       <a class="button is-loading is-link">Loading </a>
         <p>
           Loading the Game
-        </p>    
+        </p>
     </div>
   </div>
 </template>
@@ -45,14 +45,14 @@ export default {
       currentGameIsCharged: false,
     };
   },
-  watch:{
+  watch: {
     games() {
-      this.games.forEach(element => {
-        if(element.name === this.gameName){
-          this.currentGameIsCharged= true
+      this.games.forEach((element) => {
+        if (element.name === this.gameName) {
+          this.currentGameIsCharged = true;
         }
       });
-    }
+    },
   },
   methods: {
     ...mapGetters({

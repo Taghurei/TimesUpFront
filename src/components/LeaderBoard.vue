@@ -11,7 +11,7 @@
         </thead>
         <tbody>
           <tr v-for="player in team1" v-bind:key="player"
-          v-bind:class="{ 
+          v-bind:class="{
             first: getFirstScore(gameName, 'score_round') === getPlayer(player).score_round,
             second: getSecondScore(gameName, 'score_round') === getPlayer(player).score_round,
             third: getThirdScore(gameName, 'score_round') === getPlayer(player).score_round,
@@ -30,7 +30,7 @@
         </thead>
         <tbody>
           <tr v-for="player in team2" v-bind:key="player"
-          v-bind:class="{ 
+          v-bind:class="{
             first: getFirstScore(gameName, 'score_round') === getPlayer(player).score_round,
             second: getSecondScore(gameName, 'score_round') === getPlayer(player).score_round,
             third: getThirdScore(gameName, 'score_round') === getPlayer(player).score_round,
@@ -51,13 +51,13 @@
         </thead>
         <tbody>
           <tr v-for="player in team1" v-bind:key="player"
-          v-bind:class="{ 
+          v-bind:class="{
             first: getFirstScore(gameName, 'score_total') === getPlayer(player).score_total,
             second: getSecondScore(gameName, 'score_total') === getPlayer(player).score_total,
             third: getThirdScore(gameName, 'score_total') === getPlayer(player).score_total,
             }">
           <td>{{ getPlayer(player).name }}</td>
-          <td>{{ getPlayer(player).score_total }}</td>  
+          <td>{{ getPlayer(player).score_total }}</td>
           </tr>
         </tbody>
       </table>
@@ -70,7 +70,7 @@
         </thead>
         <tbody>
           <tr v-for="player in team2" v-bind:key="player"
-          v-bind:class="{ 
+          v-bind:class="{
             first: getFirstScore(gameName, 'score_total') === getPlayer(player).score_total,
             second: getSecondScore(gameName, 'score_total') === getPlayer(player).score_total,
             third: getThirdScore(gameName, 'score_total') === getPlayer(player).score_total,
@@ -139,7 +139,7 @@ export default {
   .score{
     position: static;
   }
-  
+
 
 .clearfix::after {
   display: block;

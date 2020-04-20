@@ -14,13 +14,13 @@
           <form v-on:submit.prevent="addPlayer(team1, newPlayer1)">
             <input type="text" v-model="newPlayer1.name" />
             <div
-              v-if="checkIfPlayerInTeam(team1, newPlayer1.name)"
+              v-if="checkIfPlayerInTeam(newPlayer1.name)"
               class="help is-danger"
             >
-              The player is already in the team
+              The player is already in a team
             </div>
             <button
-              v-if="!checkIfPlayerInTeam(team1, newPlayer1.name)"
+              v-if="!checkIfPlayerInTeam(newPlayer1.name)"
               class="button" type="submit"
             >
               Add Player
@@ -37,13 +37,13 @@
             <form v-on:submit.prevent="addPlayer(team2, newPlayer2)">
               <input type="text" v-model="newPlayer2.name" />
             <div
-              v-if="checkIfPlayerInTeam(team2, newPlayer2.name)"
+              v-if="checkIfPlayerInTeam(newPlayer2.name)"
               class="help is-danger"
             >
-              The player is already in the team
+              The player is already in a team
             </div>
             <button
-              v-if="!checkIfPlayerInTeam(team2, newPlayer2.name)"
+              v-if="!checkIfPlayerInTeam(newPlayer2.name)"
               class="button" type="submit"
             >
               Add Player
@@ -60,7 +60,7 @@
               v-if="checkIfWordInWords(word)"
               class="help is-danger"
             >
-              The word was already added 
+              The word was already added
             </div>
       </form>
       <div class="timer">
@@ -103,10 +103,10 @@ export default {
         }
       }
     },
-    checkIfPlayerInTeam(team, player) {
-      return (team.some((e) => e.name === player));
+    checkIfPlayerInTeam(player) {
+      return (this.team1.concat(this.team2).some((e) => e.name === player));
     },
-    checkIfWordInWords(word){
+    checkIfWordInWords(word) {
       return (this.wordList.some((e) => e === word));
     },
     ...mapActions({
@@ -133,7 +133,7 @@ export default {
       };
       this.isLoading = true;
       const promiseTeam1 = new Promise((resolve, reject) => {
-        let teamId1 = []
+        const teamId1 = [];
         for (let i = 0; i < this.team1.length; i += 1) {
           this.addPlayers(this.team1[i])
             .then((res) => {
@@ -145,22 +145,23 @@ export default {
         }
       });
       const promiseTeam2 = new Promise((resolve, reject) => {
-        let teamId2 = []
+        const teamId2 = [];
         for (let i = 0; i < this.team2.length; i += 1) {
           this.addPlayers(this.team2[i])
             .then((res) => {
               teamId2.push(res.player_id);
               if (teamId2.length === this.team2.length) {
                 resolve(teamId2);
-        }
+              }
             });
-          
         }
       });
       Promise.all([promiseTeam1, promiseTeam2])
         .then((teams) => {
-          this.game.teams.team1 = teams[0]
-          this.game.teams.team2 = teams[1]
+          const i = 0;
+          const j = 1;
+          this.game.teams.team1 = teams[i];
+          this.game.teams.team2 = teams[j];
           this.addNewGame(this.game);
         });
     },
@@ -184,8 +185,7 @@ export default {
 
   watch: {
     currentGame() {
-      this.getPlayers().then( () =>
-        this.$router.push({ name: 'Game', params: { gameName: this.gameName } }));
+      this.getPlayers().then(() => this.$router.push({ name: 'Game', params: { gameName: this.gameName } }));
     },
   },
 };

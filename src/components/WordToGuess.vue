@@ -19,7 +19,8 @@
         Validate </a>
 
       <a v-if="!isReady && !isRoundOver" class="button is-link" @click="start">Start</a>
-      <Timer v-if="isReady &&!isRoundOver" class="timer" :time-left="timeLeft" :timeLimit="timeLimit"/>
+      <Timer v-if="isReady &&!isRoundOver"
+      class="timer" :time-left="timeLeft" :timeLimit="timeLimit"/>
     </div>
     <div v-else>
         <div v-if="isRoundOver">
@@ -38,7 +39,7 @@ import {
   mapActions, mapState, mapMutations, mapGetters,
 } from 'vuex';
 import Timer from './Timer.vue';
-import LeaderBoard from './LeaderBoard.vue'
+import LeaderBoard from './LeaderBoard.vue';
 import players from '../store/players';
 
 export default {
@@ -56,7 +57,7 @@ export default {
       isTimeUp: false,
       wordToGuess: '',
       words: [],
-// data for the Timer      
+      // data for the Timer
       timeLimit: 30,
       timePassed: 0,
       timerInterval: null,
@@ -81,17 +82,15 @@ export default {
         return this.timeLimit - this.timePassed;
       }
       this.stopTimer();
-      this.isTimeUp = true;
       return 0;
     },
   },
 
-  watch:{
+  watch: {
     player() {
-      if(this.isRoundOver){
+      if (this.isRoundOver) {
         this.newRound();
-      }
-      else{
+      } else {
         this.isReady = false;
         this.update();
       }
@@ -107,13 +106,14 @@ export default {
     }),
 
     stopTimer() {
+      this.isTimeUp = true;
       this.timePassed = 0;
       clearInterval(this.timerInterval);
     },
 
     startTimer() {
-      if(parseInt(this.getGame(this.gameName).timer)){
-        this.timeLimit = parseInt (this.getGame(this.gameName).timer) 
+      if (parseInt(this.getGame(this.gameName).timer, 10)) {
+        this.timeLimit = parseInt(this.getGame(this.gameName).timer, 10);
       }
       this.isTimeUp = false;
       this.timerInterval = setInterval(() => { this.timePassed += 1; }, 1000);
@@ -131,10 +131,9 @@ export default {
       this.player.score_total += 1;
       this.player.score_round += 1;
       if (this.temporaryWordList.length > 0) {
-        if(!this.isTimeUp) {
+        if (!this.isTimeUp) {
           this.newWord();
-        }
-        else{
+        } else {
           this.refuse();
         }
       } else {
@@ -154,8 +153,8 @@ export default {
       this.wordToGuess = '';
       this.updatePlayerScoreRound(this.player);
       this.updatePlayerScoreTotal(this.player);
-      this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_round' });
-      this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_total' });
+      this.updateTeamScore({ game: this.getGame(this.gameName), scoreType: 'score_round' });
+      this.updateTeamScore({ game: this.getGame(this.gameName), scoreType: 'score_total' });
       this.stopTimer();
     },
 
@@ -174,18 +173,18 @@ export default {
     },
 
     setScoreRoundToNull() {
-      let currentTeams = this.getCurrentTeam(this.gameName, 'team1')
+      const currentTeams = this.getCurrentTeam(this.gameName, 'team1')
         .concat(this.getCurrentTeam(this.gameName, 'team2'));
-      currentTeams.forEach(player => {
-        this.getPlayer(player).score_round = 0,
-        this.updatePlayerScoreRound(this.getPlayer(player))
-        })
+      currentTeams.forEach((player) => {
+        this.getPlayer(player).score_round = 0;
+        this.updatePlayerScoreRound(this.getPlayer(player));
+      });
     },
 
   },
 
   created() {
-    this.updateTeamScore({game: this.getGame(this.gameName), score_type: 'score_total' });
+    this.updateTeamScore({ game: this.getGame(this.gameName), scoreType: 'score_total' });
   },
 
 };

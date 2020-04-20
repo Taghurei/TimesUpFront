@@ -27,18 +27,17 @@ export default {
 
   setScore({
     state, commit, getters, rootState, rootGetters,
-  }: any, {game, score_type}: any) {
+  }: any, { game, scoreType }: any) {
     let score1 = 0;
     let score2 = 0;
-    
     game.teams.team1.forEach((element: any) => {
-      score1 += rootGetters['players/getPlayer'](element)[score_type];
+      score1 += rootGetters['players/getPlayer'](element)[scoreType];
     });
     game.teams.team2.forEach((element: any) => {
-      score2 += rootGetters['players/getPlayer'](element)[score_type];
+      score2 += rootGetters['players/getPlayer'](element)[scoreType];
     });
-    commit('setScore', { team: 'team1', score_type, score_value: score1 });
-    commit('setScore', { team: 'team2', score_type, score_value: score2  });
+    commit('setScore', { team: 'team1', scoreType, scoreValue: score1 });
+    commit('setScore', { team: 'team2', scoreType, scoreValue: score2 });
   },
 
 };

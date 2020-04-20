@@ -1,5 +1,7 @@
+import { Player } from './types';
+
 export default {
-  setAllPlayers(state: any, players: any) {
+  setAllPlayers(state: any, players: Player[]) {
     state.players = players;
   },
   newPlayer(state: any) {
