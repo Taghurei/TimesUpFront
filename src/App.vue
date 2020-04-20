@@ -25,6 +25,12 @@
     font-family: 'Montserrat', Helvetica, Arial, sans-serif;
     color: #616771;
   }
+  input[type=number]{
+    font-size: 1rem;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    color: #616771;
+    width: 50px;
+  }
   h1 {
     font-size: 3rem;
     font-family: 'Montserrat SemiBold', Helvetica, Arial, sans-serif;

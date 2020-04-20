@@ -63,6 +63,10 @@
               The word was already added 
             </div>
       </form>
+      <div class="timer">
+      <div class="title">Timer</div>
+      <input type="number" v-model="timer"/> seconds per round
+      </div>
       <button v-if="!isLoading" class="button is-link" @click="addGame(game)">Start Game</button>
       <button v-else class="button is-link is-loading">Start Game</button>
     </div>
@@ -86,6 +90,7 @@ export default {
       game: {},
       gameName: randomWords(),
       isLoading: false,
+      timer: 30,
     };
   },
   methods: {
@@ -124,6 +129,7 @@ export default {
         },
         name: this.gameName,
         words: this.wordList,
+        timer: this.timer,
       };
       this.isLoading = true;
       const promiseTeam1 = new Promise((resolve, reject) => {
@@ -199,5 +205,7 @@ export default {
     font-weight: bold;
   }
 }
-
+.timer{
+  margin:30px;
+}
 </style>

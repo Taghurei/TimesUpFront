@@ -112,6 +112,9 @@ export default {
     },
 
     startTimer() {
+      if(parseInt(this.getGame(this.gameName).timer)){
+        this.timeLimit = parseInt (this.getGame(this.gameName).timer) 
+      }
       this.isTimeUp = false;
       this.timerInterval = setInterval(() => { this.timePassed += 1; }, 1000);
     },
