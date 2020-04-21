@@ -7,7 +7,7 @@ export default {
   newPlayer(state: any) {
     state.isPlayerSet = false;
   },
-  setCurrentPlayer(state: any, playerName: any) {
+  setCurrentPlayer(state: any, playerName: string) {
     state.currentPlayer = playerName;
     state.isPlayerSet = true;
   },
