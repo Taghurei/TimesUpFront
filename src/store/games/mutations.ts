@@ -1,7 +1,7 @@
-import { Game } from './types';
+import { Game, Games } from './types';
 
 export default {
-  setGame(state: any, games: any) {
+  setGame(state: any, games: Games) {
     state.games = games;
   },
 

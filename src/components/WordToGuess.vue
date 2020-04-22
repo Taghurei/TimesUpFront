@@ -57,7 +57,6 @@ export default {
       isTimeUp: false,
       wordToGuess: '',
       words: [],
-      // data for the Timer
       timeLimit: 30,
       timePassed: 0,
       timerInterval: null,
