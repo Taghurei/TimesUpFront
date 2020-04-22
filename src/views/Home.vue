@@ -3,12 +3,18 @@
     <div class="container">
 
       <img class="logo" src="@/assets/logo.png">
-      <div v-if="display">
+      <div v-if="display" class="display">
 
-            <router-link class="display button is-link"
-        :to="{ name: 'Config' }"> Start
+            <router-link class="button is-link"
+        :to="{ name: 'Config' }"> Start New Game
         </router-link>
-      </div>
+        <div class= "join-game">
+          <input class="game-name" v-model="gameName" type="text" placeholder="Enter Game Name">
+            <router-link class="button is-link"
+        :to="{ name: 'Game', params: { gameName} }"> Join existing Game
+        </router-link>
+        </div>
+        </div>
       <div v-else>
         <div class="display">
         <button class="button is-link is-loading">Start</button>
@@ -27,6 +33,12 @@
 import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
+  data() {
+    return {
+      gameName: '',
+    };
+  },
+
   computed: {
     ...mapState({
       isBackUp: (state) => state.isBackUp,
@@ -50,8 +62,14 @@ export default {
 <style>
 .display{
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.join-game{
+    margin-top: 5%;
+}
+  .game-name{
+    width:40%;
+  }
 </style>
