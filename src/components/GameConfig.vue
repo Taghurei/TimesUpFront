@@ -63,6 +63,9 @@
               The word was already added
             </div>
       </form>
+      <button class="button" @click="addRandomWords()">
+        Add 10 Random words
+      </button>
       <div class="timer">
       <div class="title">Timer</div>
       <input type="number" v-model="timer"/> seconds per round
@@ -113,6 +116,7 @@ export default {
       addNewGame: 'games/addNewGame',
       addNewPlayer: 'players/addNewPlayer',
       getPlayers: 'players/getPlayers',
+      getWordsFromDatabase: 'words/getWords',
     }),
     addNewWord() {
       if (this.word) {
@@ -120,7 +124,22 @@ export default {
         this.word = '';
       }
     },
-
+    async addRandomWords() {
+      const shuffleWords = (this.randomWordsFromDatabase)
+        .sort(() => 0.5 - Math.random());
+      console.log(shuffleWords);
+      let count = 0;
+      while (count < 10) {
+        const wordToAdd = shuffleWords.pop();
+        if (!this.wordList.includes(wordToAdd)) {
+          this.wordList.push(wordToAdd);
+          count += 1;
+        }
+        if (shuffleWords.length === 0) {
+          break;
+        }
+      }
+    },
     addGame() {
       this.game = {
         teams: {
@@ -180,9 +199,12 @@ export default {
   computed: {
     ...mapState({
       currentGame: (state) => state.games.currentGame,
+      randomWordsFromDatabase: (state) => state.words.words,
     }),
   },
-
+  created() {
+    this.getWordsFromDatabase();
+  },
   watch: {
     currentGame() {
       this.getPlayers().then(() => this.$router.push({ name: 'Game', params: { gameName: this.gameName } }));
