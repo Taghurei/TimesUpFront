@@ -3,7 +3,6 @@ export default {
     .find((words: any) => words.name === wordListName),
   getCurrentWords: (state: any, getters: any) => (wordList: string) => {
     const word = getters.getWordsRequested(wordList);
-    console.log(word);
     return word;
   },
 

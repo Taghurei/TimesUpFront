@@ -15,7 +15,7 @@
 
       <a v-if="!isRoundOver && isReady && isTimeUp"
         class="button is-danger"
-        @click="validate">
+        @click="validateWithWarning">
         Validate </a>
 
       <a v-if="!isReady && !isRoundOver" class="button is-link" @click="start">Start</a>
@@ -143,7 +143,10 @@ export default {
         this.needNewPlayer();
       }
     },
-
+    validateWithWarning(){
+      let confirmation = confirm("You sure you want to validate? Time seems to be up, it might not be fair")
+      confirmation ? this.validate(): this.refuse();
+    },
     refuse() {
       this.isReady = false;
       this.update();
@@ -183,7 +186,12 @@ export default {
     },
     keyEventListener(event) {
       if (event.key === 'y' && this.wordToGuess !== '') {
-        this.validate();
+        if (this.isTimeUp){
+          this.validateWithWarning();
+        }
+        else{
+          this.validate();
+        }
       }
       if (event.key === 'n') {
         this.refuse();

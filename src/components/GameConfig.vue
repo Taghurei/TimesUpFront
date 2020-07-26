@@ -110,7 +110,7 @@ export default {
       return (this.team1.concat(this.team2).some((e) => e.name === player));
     },
     checkIfWordInWords(word) {
-      return (this.wordList.some((e) => e === word));
+      return (this.wordList.some((e) => e.toLowerCase() === word.toLowerCase()));
     },
     ...mapActions({
       addNewGame: 'games/addNewGame',
@@ -127,11 +127,10 @@ export default {
     async addRandomWords() {
       const shuffleWords = (this.randomWordsFromDatabase)
         .sort(() => 0.5 - Math.random());
-      console.log(shuffleWords);
       let count = 0;
       while (count < 10) {
         const wordToAdd = shuffleWords.pop();
-        if (!this.wordList.includes(wordToAdd)) {
+        if (wordToAdd && !this.checkIfWordInWords(wordToAdd)) {
           this.wordList.push(wordToAdd);
           count += 1;
         }
