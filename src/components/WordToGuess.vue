@@ -123,6 +123,7 @@ export default {
     },
 
     validate() {
+      console.log(`${this.player.name} is validating ${this.wordToGuess}`);
       this.temporaryWordList = this.temporaryWordList.filter(
         (item) => item !== this.wordToGuess,
       );
