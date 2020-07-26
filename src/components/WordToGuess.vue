@@ -103,7 +103,6 @@ export default {
       updatePlayerScoreTotal: 'players/updatePlayerScoreTotal',
       updateTeamScore: 'games/setScore',
     }),
-
     stopTimer() {
       this.isTimeUp = true;
       this.timePassed = 0;
@@ -179,11 +178,19 @@ export default {
         this.updatePlayerScoreRound(this.getPlayer(player));
       });
     },
-
+    keyEventListener(event) {
+      if (event.key === 'y' && this.wordToGuess !== '') {
+        this.validate();
+      }
+      if (event.key === 'n') {
+        this.refuse();
+      }
+    },
   },
 
   created() {
     this.updateTeamScore({ game: this.getGame(this.gameName), scoreType: 'score_total' });
+    window.addEventListener('keyup', this.keyEventListener);
   },
 
 };
