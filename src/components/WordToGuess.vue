@@ -35,13 +35,13 @@
 </template>
 
 <script>
+/* eslint-disable */
 import {
   mapActions, mapState, mapMutations, mapGetters,
 } from 'vuex';
 import Timer from './Timer.vue';
 import LeaderBoard from './LeaderBoard.vue';
 import players from '../store/players';
-
 export default {
   props: ['gameName'],
 
@@ -52,6 +52,7 @@ export default {
 
   data() {
     return {
+      audio: null,
       isReady: false,
       isRoundOver: true,
       isTimeUp: false,
@@ -80,6 +81,7 @@ export default {
       if (this.timeLimit - this.timePassed >= 0) {
         return this.timeLimit - this.timePassed;
       }
+      this.audio.play();
       this.stopTimer();
       return 0;
     },
@@ -192,6 +194,10 @@ export default {
   created() {
     this.updateTeamScore({ game: this.getGame(this.gameName), scoreType: 'score_total' });
     window.addEventListener('keyup', this.keyEventListener);
+  },
+
+  mounted() {
+    this.audio = new Audio(require('../assets/Timesup.mp3'));
   },
 
 };

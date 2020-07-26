@@ -148,7 +148,8 @@ export default {
         },
         name: this.gameName,
         words: this.wordList,
-        timer: this.timer,
+        // eslint-disable-next-line
+        timer: parseInt(this.timer),
       };
       this.isLoading = true;
       const promiseTeam1 = new Promise((resolve, reject) => {
