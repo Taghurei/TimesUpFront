@@ -150,6 +150,8 @@ export default {
         // eslint-disable-next-line
         timer: parseInt(this.timer),
       };
+      console.log("If the server doesn't respond, here's what your game looks like");
+      console.log(this.game);
       this.isLoading = true;
       const promiseTeam1 = new Promise((resolve, reject) => {
         const teamId1 = [];

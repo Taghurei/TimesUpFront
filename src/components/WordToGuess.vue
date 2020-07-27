@@ -78,7 +78,7 @@ export default {
     }),
 
     timeLeft() {
-      if (this.timeLimit - this.timePassed >= 0) {
+      if (this.timeLimit - this.timePassed > 0) {
         return this.timeLimit - this.timePassed;
       }
       this.audio.play();
