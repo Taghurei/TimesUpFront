@@ -8,9 +8,14 @@
         @click="refuse">
         Refuse </a>
 
-      <a v-if="!isRoundOver && isReady && !isTimeUp"
+      <a v-if="!isRoundOver && isReady && !isTimeUp && !isValidating"
         class="button is-success"
         @click="validate">
+        Validate </a>
+
+      <a v-if="!isRoundOver && isReady && !isTimeUp && isValidating"
+        class="button is-success is-loading"
+        >
         Validate </a>
 
       <a v-if="!isRoundOver && isReady && isTimeUp"
@@ -61,6 +66,7 @@ export default {
       timeLimit: 30,
       timePassed: 0,
       timerInterval: null,
+      isValidating: false,
     };
   },
 
@@ -125,6 +131,7 @@ export default {
     },
 
     validate() {
+      this.isValidating = true;
       console.log(`${this.player.name} is validating ${this.wordToGuess}`);
       this.temporaryWordList = this.temporaryWordList.filter(
         (item) => item !== this.wordToGuess,
@@ -142,6 +149,7 @@ export default {
         this.update();
         this.needNewPlayer();
       }
+      setTimeout(() => this.isValidating = false, 500)
     },
     validateWithWarning(){
       let confirmation = confirm("You sure you want to validate? Time seems to be up, it might not be fair")
@@ -185,7 +193,7 @@ export default {
       });
     },
     keyEventListener(event) {
-      if (event.key === 'y' && this.wordToGuess !== '') {
+      if (event.key === 'y' && this.wordToGuess !== '' && !this.isValidating) {
         if (this.isTimeUp){
           this.validateWithWarning();
         }
