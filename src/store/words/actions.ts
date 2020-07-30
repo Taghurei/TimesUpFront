@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export default {
-  getWords({ commit }: any) {
+  getWords({ commit }: any, wordName: string) {
     axios
-      .get(`${process.env.VUE_APP_API}/words/test`, {
+      .get(`${process.env.VUE_APP_API}/words/${wordName}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -15,5 +15,9 @@ export default {
         commit('setWords', words);
       });
   },
-
+  updateWords({ commit }: any, wordsToUpdate: any) {
+    console.log(wordsToUpdate);
+    axios
+      .put(`${process.env.VUE_APP_API}/words/${wordsToUpdate.name}`, wordsToUpdate.words);
+  },
 };

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <router-view/>
   </div>
 </template>
@@ -14,6 +15,7 @@
   text-align: center;
   color: #616771;
   background-color: #eef2f5;
+  height: 100%;
   min-height:100vh;
   font-size: 1rem;
   input{
@@ -59,7 +61,6 @@
     font-size: 0.9rem;
   }
   .container {
-  height: 80vh;
   position: relative;
 }
 

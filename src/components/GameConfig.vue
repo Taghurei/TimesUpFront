@@ -212,7 +212,7 @@ export default {
     }),
   },
   created() {
-    this.getWordsFromDatabase();
+    this.getWordsFromDatabase('test');
   },
   watch: {
     currentGame() {
