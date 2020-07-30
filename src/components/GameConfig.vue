@@ -56,6 +56,7 @@
       <form v-on:submit.prevent="addNewWord()">
         <input type="text" v-model="word" />
         <button v-if="!checkIfWordInWords(word)" class="button" type="submit">Add Word</button>
+        <button class="button" @click="removeLastWord()">Remove Last word </button>
             <div
               v-if="checkIfWordInWords(word)"
               class="help is-danger"
@@ -124,6 +125,12 @@ export default {
         this.word = '';
       }
     },
+    removeLastWord() {
+      if (this.wordList) {
+        this.wordList.pop();
+      }
+    },
+
     async addRandomWords() {
       const shuffleWords = (this.randomWordsFromDatabase)
         .sort(() => 0.5 - Math.random());
