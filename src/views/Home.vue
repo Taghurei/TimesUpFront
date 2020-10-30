@@ -1,8 +1,11 @@
 <template>
   <div class="home">
-    <div class="container">
-
+    <div class="">
       <img class="logo" src="@/assets/logo.png">
+    </div>
+    <br clear="all" />
+    <div class="">
+
       <div v-if="display" class="display">
 
             <router-link class="button is-link"
@@ -13,6 +16,19 @@
             <router-link class="button is-link"
         :to="{ name: 'Game', params: { gameName} }"> Join existing Game
         </router-link>
+        </div>
+        <div class="edit-config">
+          Edit existing dictionaries of words
+          <div id="dictionary-selection">
+            <select v-model='selected' class="select is-medium edit-selection">
+              <option v-for="dictionaryName in dictionnaryList" :key=dictionaryName>
+                {{dictionaryName}}
+              </option>
+            </select>
+            <router-link class="button is-link"
+        :to="{ name: 'WordConfig', params: { wordName: selected }}"> Edit List
+        </router-link>
+          </div>
         </div>
         </div>
       <div v-else>
@@ -36,6 +52,8 @@ export default {
   data() {
     return {
       gameName: '',
+      dictionnaryList: ['test'],
+      selected: null,
     };
   },
 
@@ -55,14 +73,16 @@ export default {
   },
   created() {
     this.wakeUpBack();
+    const initialIndex = 0;
+    this.selected = this.dictionnaryList[initialIndex];
   },
 };
 </script>
 
-<style>
+<style lang="scss">
 .display{
   position: absolute;
-  top: 65%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -72,4 +92,13 @@ export default {
   .game-name{
     width:40%;
   }
+
+.edit-selection {
+  height:2.5rem !important;
+  width:40%;
+  margin-right: 1rem;
+}
+.logo{
+  max-height:35vh;
+}
 </style>

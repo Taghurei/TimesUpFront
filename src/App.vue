@@ -33,6 +33,16 @@
     color: #616771;
     width: 50px;
   }
+  option{
+    font-size: 1rem;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    color: #616771;
+  }
+  select{
+    font-size: 1rem;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    color: #616771;
+  }
   h1 {
     font-size: 3rem;
     font-family: 'Montserrat SemiBold', Helvetica, Arial, sans-serif;
@@ -44,9 +54,7 @@
   h3 {
     font-size: 1.5rem;
   }
-  .logo{
-    max-height: 80vh;
-  }
+
   .title {
     color: #4267B3;
   }
