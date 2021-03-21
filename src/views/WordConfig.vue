@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-<form v-on:submit.prevent="addNewWord()">
+    <h2> Edit {{wordName}} List </h2>
+    <form class="config__add-word" v-on:submit.prevent="addNewWord()">
 
       <input type="text" v-model="newWord" />
       <button class="button" type="submit">Add a new Word</button>
@@ -57,15 +58,18 @@ export default {
       this.updateWords({ words: wordsToSave, name: 'test' });
     },
   },
-  created() {
+  mounted() {
     this.getWordsFromDatabase(this.wordName);
   },
 
   watch: {
-    wordsFromDatabase() {
-      this.wordsFromDatabase.forEach((element) => {
-        this.newWordList.push({ name: element });
-      });
+    wordsFromDatabase: {
+      handler() {
+        this.wordsFromDatabase[this.wordName].forEach((element) => {
+          this.newWordList.push({ name: element });
+        });
+      },
+      deep: true,
     },
   },
   computed: {
@@ -75,7 +79,10 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.config__add-word {
+  margin-bottom: 15px;
+}
 .tag-list{
   display: flex;
   flex-direction: row;
