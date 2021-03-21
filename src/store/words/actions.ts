@@ -12,7 +12,7 @@ export default {
       })
       .then((r) => r.data)
       .then((words) => {
-        commit('setWords', words);
+        commit('setWords', { name: wordName, data: words });
       });
   },
   updateWords({ commit }: any, wordsToUpdate: any) {

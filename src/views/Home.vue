@@ -16,6 +16,24 @@
             <router-link class="button is-link"
         :to="{ name: 'Game', params: { gameName} }"> Join existing Game
         </router-link>
+      </div>
+      <div class="home__config">
+        <h3 class="home__config-title"> Edit existing dictionary of words (WIP)</h3>
+        <div id="dictionary-selection">
+          <select v-model="selected" class="select is-medium edit-selection">
+            <option
+              v-for="dictionaryName in dictionnaryList"
+              :key="dictionaryName"
+            >
+              {{ dictionaryName }}
+            </option>
+          </select>
+          <router-link
+            class="button is-link"
+            :to="{ name: 'WordConfig', params: { wordName: selected } }"
+          >
+            Edit List
+          </router-link>
         </div>
         <div class="edit-config">
           Edit existing dictionaries of words
@@ -34,18 +52,13 @@
       <div v-else>
         <div class="display">
         <button class="button is-link is-loading">Start</button>
-        <p>
-          Waking up the server
-        </p>
-        </div>
+        <p>Waking up the server</p>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-
 import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
@@ -86,11 +99,15 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.join-game{
-    margin-top: 5%;
-}
-  .game-name{
-    width:40%;
+.home {
+  .home__join {
+    margin-top: 20px;
+  }
+  .home__config {
+    margin-top: 20px;
+    .home__config-title {
+      margin-bottom: 10px;
+    }
   }
 
 .edit-selection {
