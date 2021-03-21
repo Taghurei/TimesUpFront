@@ -1,6 +1,6 @@
 export default {
 
-  getCurrentWords: (state: any, getters: any) => (wordList: string) => state.words,
+  getCurrentWords: (state: any) => state.words,
 
-
+  wordsListNames: (state: any) => Object.keys(state.words),
 };

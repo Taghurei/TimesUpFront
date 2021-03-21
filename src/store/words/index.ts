@@ -7,7 +7,7 @@ const words = {
   namespaced,
   state: {
     words: {
-      test: [],
+      personalities: [],
       geography: [],
     },
   },
