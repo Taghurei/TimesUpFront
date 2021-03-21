@@ -6,7 +6,10 @@ const namespaced = true;
 const words = {
   namespaced,
   state: {
-    words: [],
+    words: {
+      test: [],
+      geography: [],
+    },
   },
 
   actions,
