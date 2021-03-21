@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <router-view/>
   </div>
 </template>
@@ -14,6 +15,7 @@
   text-align: center;
   color: #616771;
   background-color: #eef2f5;
+  height: 100%;
   min-height:100vh;
   font-size: 1rem;
   input{
@@ -31,6 +33,16 @@
     color: #616771;
     width: 50px;
   }
+  option{
+    font-size: 1rem;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    color: #616771;
+  }
+  select{
+    font-size: 1rem;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    color: #616771;
+  }
   h1 {
     font-size: 3rem;
     font-family: 'Montserrat SemiBold', Helvetica, Arial, sans-serif;
@@ -42,9 +54,7 @@
   h3 {
     font-size: 1.5rem;
   }
-  .logo{
-    max-height: 80vh;
-  }
+
   .title {
     color: #4267B3;
   }
@@ -59,7 +69,7 @@
     font-size: 0.9rem;
   }
   .container {
-  height: 80vh;
+  min-height: 80vh;
   position: relative;
 }
 

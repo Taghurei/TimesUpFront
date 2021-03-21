@@ -1,5 +1,5 @@
 export default {
-  setWords(state: any, words: any) {
-    state.words = words;
+  setWords(state: any, payload: {name: string; data: string[]}) {
+    state.words[payload.name] = [...payload.data];
   },
 };
