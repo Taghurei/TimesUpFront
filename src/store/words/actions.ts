@@ -15,6 +15,20 @@ export default {
         commit('setWords', { name: wordName, data: words });
       });
   },
+  getAllWords({ commit }: any) {
+    axios
+      .get(`${process.env.VUE_APP_API}/words/`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      })
+      .then((r) => r.data)
+      .then((words) => {
+        commit('setAllWords', words);
+      });
+  },
   updateWords({ commit }: any, wordsToUpdate: any) {
     console.log(wordsToUpdate);
     axios

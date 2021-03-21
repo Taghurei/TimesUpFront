@@ -72,7 +72,7 @@
           The word was already added
         </div>
       </form>
-        <select disabled v-model="selected" class="select is-medium edit-selection">
+        <select v-model="selected" class="select is-medium edit-selection">
           <option
             v-for="dictionaryName in dictionnaryList"
             :key="dictionaryName"
@@ -80,7 +80,7 @@
             {{ dictionaryName }}
           </option></select
         >
-      <button disabled class="button" @click="addRandomWords()">
+      <button class="button" @click="addRandomWords()">
 
         Add 10 Random words
       </button>
@@ -98,7 +98,7 @@
 
 <script>
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import randomWords from 'random-words';
 
 export default {
@@ -114,7 +114,7 @@ export default {
       gameName: randomWords(),
       isLoading: false,
       timer: 30,
-      dictionnaryList: ['Coming back soon', 'test', 'geography'],
+      dictionnaryList: [],
       selected: null,
     };
   },
@@ -138,7 +138,10 @@ export default {
       addNewGame: 'games/addNewGame',
       addNewPlayer: 'players/addNewPlayer',
       getPlayers: 'players/getPlayers',
-      getWordsFromDatabase: 'words/getWords',
+      getWordsFromDatabase: 'words/getAllWords',
+    }),
+    ...mapGetters({
+      wordsListNames: 'words/wordsListNames',
     }),
     addNewWord() {
       if (this.word) {
@@ -231,7 +234,8 @@ export default {
     }),
   },
   created() {
-    this.getWordsFromDatabase('test');
+    this.getWordsFromDatabase();
+    this.dictionnaryList = this.wordsListNames();
   },
   watch: {
     currentGame() {

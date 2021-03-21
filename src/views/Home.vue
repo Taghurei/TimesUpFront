@@ -4,54 +4,40 @@
       <img class="logo" src="@/assets/logo.png">
     </div>
     <br clear="all" />
-    <div class="">
 
-      <div v-if="display" class="display">
+    <div v-if="display" class="display">
 
-            <router-link class="button is-link"
-        :to="{ name: 'Config' }"> Start New Game
+          <router-link class="button is-link"
+      :to="{ name: 'Config' }"> Start New Game
+      </router-link>
+      <div class= "join-game">
+        <input class="game-name" v-model="gameName" type="text" placeholder="Enter Game Name">
+          <router-link class="button is-link"
+      :to="{ name: 'Game', params: { gameName} }"> Join existing Game
         </router-link>
-        <div class= "join-game">
-          <input class="game-name" v-model="gameName" type="text" placeholder="Enter Game Name">
-            <router-link class="button is-link"
-        :to="{ name: 'Game', params: { gameName} }"> Join existing Game
-          </router-link>
-          <div class="home__config">
-            <h3 class="home__config-title"> Edit existing dictionary of words (WIP)</h3>
-            <div id="dictionary-selection">
-              <select v-model="selected" class="select is-medium edit-selection">
-                <option
-                  v-for="dictionaryName in dictionnaryList"
-                  :key="dictionaryName"
-                >
-                  {{ dictionaryName }}
-                </option>
-              </select>
-              <router-link
-                class="button is-link"
-                :to="{ name: 'WordConfig', params: { wordName: selected } }"
+        <div class="home__config">
+          <h3 class="home__config-title"> Edit existing dictionary of words (WIP)</h3>
+          <div id="dictionary-selection">
+            <select v-model="selected" class="select is-medium edit-selection">
+              <option
+                v-for="dictionaryName in dictionnaryList"
+                :key="dictionaryName"
               >
-                Edit List
-              </router-link>
-            </div>
-            <div class="edit-config">
-              Edit existing dictionaries of words
-              <div id="dictionary-selection">
-                <select v-model='selected' class="select is-medium edit-selection">
-                  <option v-for="dictionaryName in dictionnaryList" :key=dictionaryName>
-                    {{dictionaryName}}
-                  </option>
-                </select>
-                <router-link class="button is-link"
-                :to="{ name: 'WordConfig', params: { wordName: selected }}"> Edit List
-                </router-link>
-              </div>
-            </div>
+                {{ dictionaryName }}
+              </option>
+            </select>
+            <router-link
+              class="button is-link"
+              :to="{ name: 'WordConfig', params: { wordName: selected } }"
+            >
+              Edit List
+            </router-link>
           </div>
         </div>
       </div>
-      <div v-else>
-        <div class="display">
+    </div>
+    <div v-else>
+      <div class="display">
         <button class="button is-link is-loading">Start</button>
         <p>Waking up the server</p>
       </div>
@@ -60,13 +46,13 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
       gameName: '',
-      dictionnaryList: ['test'],
+      dictionnaryList: [],
       selected: null,
     };
   },
@@ -84,10 +70,14 @@ export default {
     ...mapActions({
       wakeUpBack: 'wakeUpBack',
     }),
+    ...mapGetters({
+      wordsListNames: 'words/wordsListNames',
+    }),
   },
   created() {
     this.wakeUpBack();
     const initialIndex = 0;
+    this.dictionnaryList = this.wordsListNames();
     this.selected = this.dictionnaryList[initialIndex];
   },
 };
