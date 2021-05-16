@@ -7,16 +7,14 @@ const words = {
   namespaced,
   state: {
     words: {
-      politiciens: [],
+      personnalites: [],
       geographie: [],
       histoire: [],
-      acteurs: [],
-      film: [],
+      cinema: [],
       musique: [],
-      physique: [],
-      astronomie: [],
       concept: [],
       objets: [],
+      autre: [],
     },
   },
 
