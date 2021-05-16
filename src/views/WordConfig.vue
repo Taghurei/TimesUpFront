@@ -55,7 +55,7 @@ export default {
       this.newWordList.forEach((element) => {
         wordsToSave.push(element.name);
       });
-      this.updateWords({ words: wordsToSave, name: 'test' });
+      this.updateWords({ words: wordsToSave, name: this.wordName });
     },
   },
   mounted() {
