@@ -72,17 +72,18 @@
           The word was already added
         </div>
       </form>
-        <select v-model="selected" class="select is-medium edit-selection">
-          <option
-            v-for="dictionaryName in dictionnaryList"
-            :key="dictionaryName"
-          >
-            {{ dictionaryName }}
-          </option></select
+      <h3 style="color:#4267B3;margin:10px;">Add words from  dictionaries</h3>
+      <select v-model="selected" class="select is-medium edit-selection">
+        <option
+          v-for="dictionaryName in dictionnaryList"
+          :key="dictionaryName"
         >
-      <button class="button" @click="addRandomWords()">
-
-        Add 10 Random words
+          {{ dictionaryName }}
+        </option>
+      </select>
+        <input type="number" v-model="numberToAdd" />
+      <button class="button" @click="addRandomWords(numberToAdd)">
+        Add words
       </button>
       <div class="timer">
         <div class="title">Timer</div>
@@ -116,6 +117,7 @@ export default {
       timer: 30,
       dictionnaryList: [],
       selected: null,
+      numberToAdd: 10,
     };
   },
   methods: {
@@ -155,12 +157,12 @@ export default {
       }
     },
 
-    async addRandomWords() {
+    async addRandomWords(int = 10) {
       const shuffleWords = this.randomWordsFromDatabase[this.selected].sort(
         () => 0.5 - Math.random(),
       );
       let count = 0;
-      while (count < 10) {
+      while (count < int) {
         const wordToAdd = shuffleWords.pop();
         if (wordToAdd && !this.checkIfWordInWords(wordToAdd)) {
           this.wordList.push(wordToAdd);
