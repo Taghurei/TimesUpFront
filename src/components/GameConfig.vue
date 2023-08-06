@@ -158,7 +158,8 @@ export default {
     },
 
     async addRandomWords(int = 10) {
-      const shuffleWords = this.randomWordsFromDatabase[this.selected].sort(
+      console.log(this.randomWordsFromDatabase, this.selected);
+      const shuffleWords = this.randomWordsFromDatabase[this.selected]?.sort(
         () => 0.5 - Math.random(),
       );
       let count = 0;
