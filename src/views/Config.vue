@@ -19,6 +19,6 @@ export default {
 </script>
 <style scoped lang="scss">
 .config{
-  transform: translateY(20%);
+  transform: translateY(50px);
 }
 </style>

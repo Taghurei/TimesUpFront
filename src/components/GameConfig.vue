@@ -81,10 +81,21 @@
           {{ dictionaryName }}
         </option>
       </select>
-        <input type="number" v-model="numberToAdd" />
+      <!-- <input type="number" v-model="numberToAdd" />
       <button class="button" @click="addRandomWords(numberToAdd)">
         Add words
+      </button> -->
+      <button class="button" @click="toggleDisplayDict()">
+        Display dictionnary list
       </button>
+      <div v-if="displayDict" class="dictionnary-list">
+        <div
+          class="button is-light"
+          v-for="(word,index) in wordsToDisplay()"
+          :key="word ? word: index"
+          @click="addWord(word)"
+        >{{word}}</div>
+      </div>
       <div class="timer">
         <div class="title">Timer</div>
         <input type="number" v-model="timer" /> seconds per round
@@ -118,6 +129,7 @@ export default {
       dictionnaryList: [],
       selected: null,
       numberToAdd: 10,
+      displayDict: false,
     };
   },
   methods: {
@@ -155,6 +167,29 @@ export default {
       if (this.wordList) {
         this.wordList.pop();
       }
+    },
+
+    addWord(word) {
+      if (word) {
+        this.wordList.push(word);
+      }
+    },
+
+    toggleDisplayDict() {
+      console.log('toggle', this.dictionnaryList, this.selected);
+      this.displayDict = !this.displayDict;
+    },
+
+    wordsToDisplay() {
+      const currentWordSet = new Set(this.wordList);
+      const list = [];
+      this.randomWordsFromDatabase[this.selected].forEach((element) => {
+        if (!(currentWordSet.has(element))) {
+          list.push(element);
+        }
+      });
+      console.log(list);
+      return new Set(list);
     },
 
     async addRandomWords(int = 10) {
@@ -239,6 +274,7 @@ export default {
   created() {
     this.getWordsFromDatabase();
     this.dictionnaryList = this.wordsListNames();
+    this.dictionnaryList = ['personnalites', 'geographie', 'cinema', 'musique', 'concept', 'objets', 'autre', 'Random '];
   },
   watch: {
     currentGame() {
@@ -269,5 +305,13 @@ export default {
   height: 2.5rem !important;
   width: 218px;
   margin-right: 5px;
+}
+.dictionnary-list {
+      max-height: 200px;
+    overflow: auto;
+    margin: 6px -40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 </style>
