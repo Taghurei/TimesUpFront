@@ -11,6 +11,8 @@ const games = {
     score_total: { team1: 0, team2: 0 },
     score_round: { team1: 0, team2: 0 },
     currentGame: {},
+    lobby: null,
+    lobbyError: '',
   },
 
   actions,

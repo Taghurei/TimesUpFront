@@ -6,6 +6,9 @@ import store from './store/index';
 
 Vue.config.productionTip = false;
 
+// Picks up the login from a previous visit, when there is one
+store.dispatch('auth/restoreSession');
+
 new Vue({
   router,
   store,

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import auth from './auth/index';
 import games from './games/index';
 import players from './players/index';
 import words from './words/index';
@@ -9,6 +10,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
+    auth,
     games,
     players,
     words,
