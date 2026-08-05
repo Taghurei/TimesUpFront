@@ -22,7 +22,9 @@
     height: 2.5em;
     margin-right: 0.3em;
   }
-  input[type=text]{
+  /* password included: left unstyled it fell back to 13px, which looks off
+     and makes phones zoom in on focus (they do below 16px) */
+  input[type=text], input[type=password]{
     font-size: 1rem;
     font-family: 'Montserrat', Helvetica, Arial, sans-serif;
     color: #616771;
@@ -87,6 +89,31 @@
     position: relative;
     float: left;
     width : 40%;
+  }
+
+  /* Phones. */
+  @media screen and (max-width: 768px) {
+    /* bulma .columns have -0.75rem side margins: without a gutter on the
+       container they poke past the screen and the page wiggles sideways */
+    .container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    /* the game's three floated columns stack instead of squeezing the word
+       into a 156px strip; Game.vue puts the word back on top */
+    .team, .guess {
+      float: none;
+      width: 100%;
+    }
+    .vertical-center {
+      transform: none;
+    }
   }
 }
 

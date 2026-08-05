@@ -95,9 +95,16 @@ export default {
      margin-bottom: 0rem;
 }
 
+/* big enough to read, and a delete you can actually hit with a thumb */
+.tags .tag {
+  font-size: 1rem;
+  height: 2.2em;
+}
+
 .tag-delete{
   border: 1px solid #4a4a4a;
   border-left: 0px;
+  padding: 0 0.9em;
 }
 .tag-delete:hover{
   cursor: pointer;

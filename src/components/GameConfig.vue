@@ -60,42 +60,17 @@
       </div>
       <div class="title">Words</div>
       Your game currently has {{ wordList.length }} word(s)
-      <form v-on:submit.prevent="addNewWord()">
-        <input type="text" v-model="word" />
-        <button v-if="!checkIfWordInWords(word)" class="button" type="submit">
-          Add Word
-        </button>
-        <button class="button" @click="removeLastWord()">
-          Remove Last word
-        </button>
-        <div v-if="checkIfWordInWords(word)" class="help is-danger">
-          The word was already added
-        </div>
-      </form>
-      <h3 style="color:#4267B3;margin:10px;">Add words from  dictionaries</h3>
-      <select v-model="selected" class="select is-medium edit-selection">
-        <option
-          v-for="dictionaryName in dictionnaryList"
-          :key="dictionaryName"
-        >
-          {{ dictionaryName }}
-        </option>
-      </select>
-      <!-- <input type="number" v-model="numberToAdd" />
-      <button class="button" @click="addRandomWords(numberToAdd)">
-        Add words
-      </button> -->
-      <button class="button" @click="toggleDisplayDict()">
-        Display dictionnary list
-      </button>
-      <div v-if="displayDict" class="dictionnary-list">
-        <div
-          class="button is-light"
-          v-for="(word,index) in wordsToDisplay()"
-          :key="word ? word: index"
-          @click="addWord(word)"
-        >{{word}}</div>
+      <div class="config__words">
+        <span class="tag is-link" v-for="word in wordList" :key="word">
+          {{ word }}
+          <button
+            class="delete is-small"
+            type="button"
+            @click="removeWord(word)"
+          ></button>
+        </span>
       </div>
+      <WordPicker :existingWords="wordList" @add-words="addWords" />
       <div class="timer">
         <div class="title">Timer</div>
         <input type="number" v-model="timer" /> seconds per round
@@ -109,27 +84,25 @@
 </template>
 
 <script>
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import randomWords from 'random-words';
+import WordPicker from '@/components/WordPicker.vue';
 
 export default {
+  components: {
+    WordPicker,
+  },
   data() {
     return {
       team1: [],
       team2: [],
       newPlayer1: { name: '' },
       newPlayer2: { name: '' },
-      word: '',
       wordList: [],
       game: {},
       gameName: randomWords(),
       isLoading: false,
       timer: 30,
-      dictionnaryList: [],
-      selected: null,
-      numberToAdd: 10,
-      displayDict: false,
     };
   },
   methods: {
@@ -145,69 +118,18 @@ export default {
     checkIfPlayerInTeam(player) {
       return this.team1.concat(this.team2).some((e) => e.name === player);
     },
-    checkIfWordInWords(word) {
-      return this.wordList.some((e) => e.toLowerCase() === word.toLowerCase());
-    },
     ...mapActions({
       addNewGame: 'games/addNewGame',
       addNewPlayer: 'players/addNewPlayer',
       getPlayers: 'players/getPlayers',
-      getWordsFromDatabase: 'words/getAllWords',
     }),
-    ...mapGetters({
-      wordsListNames: 'words/wordsListNames',
-    }),
-    addNewWord() {
-      if (this.word) {
-        this.wordList.push(this.word);
-        this.word = '';
-      }
+    // the WordPicker only offers words the game does not have yet,
+    // so nothing to filter here
+    addWords(words) {
+      this.wordList.push(...words);
     },
-    removeLastWord() {
-      if (this.wordList) {
-        this.wordList.pop();
-      }
-    },
-
-    addWord(word) {
-      if (word) {
-        this.wordList.push(word);
-      }
-    },
-
-    toggleDisplayDict() {
-      console.log('toggle', this.dictionnaryList, this.selected);
-      this.displayDict = !this.displayDict;
-    },
-
-    wordsToDisplay() {
-      const currentWordSet = new Set(this.wordList);
-      const list = [];
-      this.randomWordsFromDatabase[this.selected].forEach((element) => {
-        if (!(currentWordSet.has(element))) {
-          list.push(element);
-        }
-      });
-      console.log(list);
-      return new Set(list);
-    },
-
-    async addRandomWords(int = 10) {
-      console.log(this.randomWordsFromDatabase, this.selected);
-      const shuffleWords = this.randomWordsFromDatabase[this.selected]?.sort(
-        () => 0.5 - Math.random(),
-      );
-      let count = 0;
-      while (count < int) {
-        const wordToAdd = shuffleWords.pop();
-        if (wordToAdd && !this.checkIfWordInWords(wordToAdd)) {
-          this.wordList.push(wordToAdd);
-          count += 1;
-        }
-        if (shuffleWords.length === 0) {
-          break;
-        }
-      }
+    removeWord(word) {
+      this.wordList = this.wordList.filter((element) => element !== word);
     },
     addGame() {
       this.game = {
@@ -268,13 +190,7 @@ export default {
   computed: {
     ...mapState({
       currentGame: (state) => state.games.currentGame,
-      randomWordsFromDatabase: (state) => state.words.words,
     }),
-  },
-  created() {
-    this.getWordsFromDatabase();
-    this.dictionnaryList = this.wordsListNames();
-    this.dictionnaryList = ['personnalites', 'geographie', 'cinema', 'musique', 'concept', 'objets', 'autre', 'Random '];
   },
   watch: {
     currentGame() {
@@ -301,17 +217,17 @@ export default {
 .timer {
   margin: 30px;
 }
-.edit-selection {
-  height: 2.5rem !important;
-  width: 218px;
-  margin-right: 5px;
-}
-.dictionnary-list {
-      max-height: 200px;
-    overflow: auto;
-    margin: 6px -40px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+.config__words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  max-height: 150px;
+  overflow: auto;
+  margin: 10px 0;
+  .tag {
+    font-size: 1rem;
+    height: 2em;
+  }
 }
 </style>

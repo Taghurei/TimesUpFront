@@ -206,6 +206,11 @@ export default {
     max-height: 150px;
     overflow: auto;
     margin: 10px 0;
+    /* readable on a phone held at arm's length */
+    .tag {
+      font-size: 1rem;
+      height: 2em;
+    }
   }
   .join__waiting {
     margin-top: 20px;

@@ -85,4 +85,18 @@ export default {
     transform: translateY(100%);
 }
 
+/* stacked on phones, with the word and timer first: that is what the whole
+   table looks at, the team lists are just navigation */
+@media screen and (max-width: 768px) {
+  .container {
+    height: auto;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .guess {
+    order: -1;
+    margin-bottom: 20px;
+  }
+}
 </style>
