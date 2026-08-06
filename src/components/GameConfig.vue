@@ -59,16 +59,18 @@
         </div>
       </div>
       <div class="title">Words</div>
+      <!-- the words stay hidden: everybody types theirs on the same screen,
+           and they are what the game is about guessing -->
       Your game currently has {{ wordList.length }} word(s)
-      <div class="config__words">
-        <span class="tag is-link" v-for="word in wordList" :key="word">
-          {{ word }}
-          <button
-            class="delete is-small"
-            type="button"
-            @click="removeWord(word)"
-          ></button>
-        </span>
+      <div class="config__words-actions">
+        <button
+          v-if="wordList.length"
+          class="button"
+          type="button"
+          @click="removeLastWord()"
+        >
+          Remove last word
+        </button>
       </div>
       <WordPicker :existingWords="wordList" @add-words="addWords" />
       <div class="timer">
@@ -128,8 +130,10 @@ export default {
     addWords(words) {
       this.wordList.push(...words);
     },
-    removeWord(word) {
-      this.wordList = this.wordList.filter((element) => element !== word);
+    // blind on purpose: showing the words would spoil them, so all you can
+    // do is undo the one you just typed
+    removeLastWord() {
+      this.wordList.pop();
     },
     addGame() {
       this.game = {
@@ -217,17 +221,7 @@ export default {
 .timer {
   margin: 30px;
 }
-.config__words {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  justify-content: center;
-  max-height: 150px;
-  overflow: auto;
+.config__words-actions {
   margin: 10px 0;
-  .tag {
-    font-size: 1rem;
-    height: 2em;
-  }
 }
 </style>

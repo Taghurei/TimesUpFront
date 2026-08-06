@@ -24,12 +24,8 @@
       </p>
 
       <div class="title">Words</div>
+      <!-- count only: the words are what the game is about guessing -->
       <p>{{ lobby.words.length }} word(s) in the pool</p>
-      <div class="lobby__words">
-        <span class="tag is-link" v-for="word in lobby.words" :key="word">
-          {{ word }}
-        </span>
-      </div>
       <WordPicker :existingWords="lobby.words" @add-words="addWords" />
 
       <div class="timer">
@@ -159,20 +155,6 @@ export default {
   }
   .lobby__join {
     margin: 20px 0;
-  }
-  .lobby__words {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    justify-content: center;
-    max-height: 150px;
-    overflow: auto;
-    margin: 10px 0;
-    /* readable on a phone held at arm's length */
-    .tag {
-      font-size: 1rem;
-      height: 2em;
-    }
   }
   .lobby__loading {
     transform: translateY(100%);

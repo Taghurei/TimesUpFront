@@ -38,12 +38,8 @@
 
       <div v-if="hasJoined && !isPickingTeam">
         <div class="title">Words</div>
+        <!-- count only: the words are what the game is about guessing -->
         <p>{{ lobby.words.length }} word(s) in the pool</p>
-        <div class="join__words">
-          <span class="tag is-link" v-for="word in lobby.words" :key="word">
-            {{ word }}
-          </span>
-        </div>
         <WordPicker :existingWords="lobby.words" @add-words="addWords" />
         <p class="help join__waiting">
           Waiting for {{ lobby.owner }} to start the game...
@@ -197,20 +193,6 @@ export default {
     margin-top: 5px;
     text-decoration: underline;
     cursor: pointer;
-  }
-  .join__words {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    justify-content: center;
-    max-height: 150px;
-    overflow: auto;
-    margin: 10px 0;
-    /* readable on a phone held at arm's length */
-    .tag {
-      font-size: 1rem;
-      height: 2em;
-    }
   }
   .join__waiting {
     margin-top: 20px;
