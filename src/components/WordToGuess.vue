@@ -6,9 +6,21 @@
         <strong> {{ player.name }} </strong>
       </h3>
       <h3>
-        Word To Guess : <br />
+        Word To Guess
+        <span class="remaining-count">({{temporaryWordList.length}})</span>
+        <br />
+        <div v-if="wordToGuess === '' && timePassed != 0">
+          Time left on current player : {{timeLimit - timePassed}} seconds
+        </div>
         <strong> {{ wordToGuess }} </strong>
       </h3>
+      <!-- <button
+        v-if="!isRoundOver && isReady"
+        class="button is-warning"
+        disabled
+        @click="refuseWithoutStoppingGame">
+         Passer
+      </button> -->
       <a v-if="!isRoundOver && isReady" class="button is-warning" @click="refuse"> Refuse </a>
 
       <a
@@ -44,7 +56,7 @@
     </div>
     <div v-else>
       <div v-if="isRoundOver">
-        <a class="button is-link" @click="newRound">Start a new Round </a>
+        <a class="button is-link" @click="newRoundWithTimeleft">Start a new Round </a>
         <LeaderBoard :gameName="gameName" />
       </div>
       <div v-else>
@@ -97,7 +109,7 @@ export default {
     }),
 
     timeLeft() {
-      if (this.timeLimit - this.timePassed > 0) {
+ if (this.timeLimit - this.timePassed > 0) {
         return this.timeLimit - this.timePassed;
       }
       this.audio.play();
@@ -124,9 +136,11 @@ export default {
       updatePlayerScoreTotal: "players/updatePlayerScoreTotal",
       updateTeamScore: "games/setScore"
     }),
-    stopTimer() {
+    stopTimer(resetTime = true) {
       this.isTimeUp = true;
-      this.timePassed = 0;
+      if (resetTime) {
+        this.timePassed = 0;
+      }
       clearInterval(this.timerInterval);
     },
 
@@ -159,7 +173,7 @@ export default {
         }
       } else {
         this.isRoundOver = true;
-        this.update();
+        this.update(false);
         this.needNewPlayer();
       }
       setTimeout(() => (this.isValidating = false), 500);
@@ -177,19 +191,31 @@ export default {
     },
 
     refuseWithoutStoppingGame() {
+      if (this.timePassed > this.timeLimit - 5) {
+        this.refuse();
+      }
+      this.timePassed = this.timePassed + 5;
       this.newWord();
     },
 
-    update() {
+
+
+    update(stopTimer = true) {
       this.wordToGuess = "";
       this.updatePlayerScoreRound(this.player);
       this.updatePlayerScoreTotal(this.player);
       this.updateTeamScore({ game: this.getGame(this.gameName), scoreType: "score_round" });
       this.updateTeamScore({ game: this.getGame(this.gameName), scoreType: "score_total" });
-      this.stopTimer();
+      this.isTimeUp = true;
+      this.stopTimer(stopTimer);
     },
 
     newRound() {
+      this.stopTimer();
+      this.newRoundWithTimeleft();
+    },
+
+    newRoundWithTimeleft() {
       this.isRoundOver = false;
       this.isReady = false;
       this.words = this.getGame(this.gameName).words;
@@ -258,6 +284,10 @@ export default {
   strong {
     font-size: 2rem;
     font-weight: normal;
+  }
+  .remaining-count {
+    font-size: 14px;
+    font-style: italic;
   }
 }
 </style>

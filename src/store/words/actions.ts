@@ -29,6 +29,7 @@ export default {
         commit('setAllWords', words);
       });
   },
+
   updateWords({ commit }: any, wordsToUpdate: any) {
     console.log(wordsToUpdate);
     axios
